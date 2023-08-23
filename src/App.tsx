@@ -99,6 +99,34 @@ class App extends React.Component<{}, state> {
           image: "images/denception.jpg",
           imdb_url: "https://www.imdb.com/title/tt1375666/",
         },
+        {
+          id: 12,
+          movie: "Power Rangers 1",
+          rating: 10,
+          image: "images/denception.jpg",
+          imdb_url: "https://www.imdb.com/title/tt1375666/",
+        },
+        {
+          id: 13,
+          movie: "Power Rangers 2",
+          rating: 10,
+          image: "images/denception.jpg",
+          imdb_url: "https://www.imdb.com/title/tt1375666/",
+        },
+        {
+          id: 14,
+          movie: "Power Rangers 3",
+          rating: 10,
+          image: "images/denception.jpg",
+          imdb_url: "https://www.imdb.com/title/tt1375666/",
+        },
+        {
+          id: 15,
+          movie: "Power Rangers 4",
+          rating: 10,
+          image: "images/denception.jpg",
+          imdb_url: "https://www.imdb.com/title/tt1375666/",
+        },
       ],
     });
   }

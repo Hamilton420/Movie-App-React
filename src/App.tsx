@@ -92,6 +92,13 @@ class App extends React.Component<{}, state> {
           image: "images/inception.jpg",
           imdb_url: "https://www.imdb.com/title/tt1375666/",
         },
+        {
+          id: 11,
+          movie: "Deception",
+          rating: 10,
+          image: "images/denception.jpg",
+          imdb_url: "https://www.imdb.com/title/tt1375666/",
+        },
       ],
     });
   }

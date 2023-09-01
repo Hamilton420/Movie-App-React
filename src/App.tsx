@@ -1,7 +1,8 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import "./App.css";
 import Movie from "./Movie-Component";
-import { notStrictEqual } from "assert";
+
+interface props {}
 
 interface movie {
   id: number;
@@ -16,13 +17,21 @@ interface state {
   search: string;
 }
 
-class App extends React.Component<{}, state> {
-  constructor(props: any) {
+interface apiMovie {
+  imdbID: number;
+  Title: string;
+  imdbRating: string;
+  Poster: string;
+  Website: string;
+}
+
+class App extends React.Component<props, state> {
+  constructor(props: props) {
     super(props);
     this.state = { movies: [], search: "" };
   }
 
-  setMovie = (data: any) => {
+  setMovie = (data: apiMovie) => {
     this.setState({
       movies: [
         {
@@ -36,119 +45,6 @@ class App extends React.Component<{}, state> {
     });
   };
 
-  componentDidMount() {
-    // this.getMoviesFromApi();
-    // this.setState({
-    //   movies: [
-    //     {
-    //       id: 1,
-    //       movie: "The Shawshank Redemption",
-    //       rating: 9.2,
-    //       image: "images/shawshank.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt0111161/",
-    //     },
-    //     {
-    //       id: 2,
-    //       movie: "The Godfather",
-    //       rating: 9.2,
-    //       image: "images/godfather.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt0068646/",
-    //     },
-    //     {
-    //       id: 3,
-    //       movie: "The Dark Knight",
-    //       rating: 9,
-    //       image: "images/dark_knight.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt0468569/",
-    //     },
-    //     {
-    //       id: 4,
-    //       movie: "Pulp Fiction",
-    //       rating: 8.9,
-    //       image: "images/pulp_fiction.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt0110912/",
-    //     },
-    //     {
-    //       id: 5,
-    //       movie: "The Lord of the Rings: The Return of the King",
-    //       rating: 9,
-    //       image: "images/lotr_return_king.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt0167260/",
-    //     },
-    //     {
-    //       id: 6,
-    //       movie: "The Good, the Bad and the Ugly",
-    //       rating: 8.8,
-    //       image: "images/good_bad_ugly.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt0060196/",
-    //     },
-    //     {
-    //       id: 7,
-    //       movie: "Fight Club",
-    //       rating: 8.8,
-    //       image: "images/fight_club.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt0137523/",
-    //     },
-    //     {
-    //       id: 8,
-    //       movie: "The Lord of the Rings: The Fellowship of the Ring",
-    //       rating: 8.8,
-    //       image: "images/lotr_fellowship.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt0120737/",
-    //     },
-    //     {
-    //       id: 9,
-    //       movie: "Forrest Gump",
-    //       rating: 8.8,
-    //       image: "images/forrest_gump.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt0109830/",
-    //     },
-    //     {
-    //       id: 10,
-    //       movie: "Inception",
-    //       rating: 8.8,
-    //       image: "images/inception.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt1375666/",
-    //     },
-    //     {
-    //       id: 11,
-    //       movie: "Deception",
-    //       rating: 10,
-    //       image: "images/denception.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt1375666/",
-    //     },
-    //     {
-    //       id: 12,
-    //       movie: "Power Rangers 1",
-    //       rating: 10,
-    //       image: "images/denception.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt1375666/",
-    //     },
-    //     {
-    //       id: 13,
-    //       movie: "Power Rangers 2",
-    //       rating: 10,
-    //       image: "images/denception.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt1375666/",
-    //     },
-    //     {
-    //       id: 14,
-    //       movie: "Power Rangers 3",
-    //       rating: 10,
-    //       image: "images/denception.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt1375666/",
-    //     },
-    //     {
-    //       id: 15,
-    //       movie: "Power Rangers 4",
-    //       rating: 10,
-    //       image: "images/denception.jpg",
-    //       imdb_url: "https://www.imdb.com/title/tt1375666/",
-    //     },
-    //   ],
-    // });
-  }
-
   getMoviesFromApi = () => {
     fetch(`http://www.omdbapi.com/?apikey=d92e4a4a&t=${this.state.search}`, {
       method: "GET",
@@ -158,41 +54,39 @@ class App extends React.Component<{}, state> {
         return response.json();
       })
       .then((data) => {
-        if (!data.Error) {
-          this.setMovie(data);
-        } else {
-          this.setMovie({
-            id: "error",
-            movie: data.Error,
-            rating: 0,
-            image: "error",
-            imdb_url: "error",
-          });
-          console.log({
-            id: "",
-            movie: data.Error,
-            rating: 0,
-            image: "",
-            imdb_url: "",
-          });
-        }
+        !data.Error
+          ? this.setMovie(data)
+          : this.setMovie({
+              imdbID: 0,
+              Title: data.Error,
+              imdbRating: "",
+              Poster: "error",
+              Website: "error",
+            });
       })
-      .catch((err) => {
+      .catch(() => {
         this.setMovie({
-          id: "",
-          movie: "NO MOVIE FOUND",
-          rating: 0,
-          image: "",
-          imdb_url: "",
+          imdbID: 0,
+          Title: "Movie not found",
+          imdbRating: "",
+          Poster: "error",
+          Website: "error",
         });
       });
   };
 
-  updateSearch = (event: any) => {
+  updateSearch = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
 
     this.setState({
       search: value,
+    });
+  };
+
+  clearPage = () => {
+    this.setState({
+      movies: [],
+      search: "",
     });
   };
 
@@ -203,8 +97,9 @@ class App extends React.Component<{}, state> {
         <button onClick={this.getMoviesFromApi}>Search</button>
 
         {this.state.movies.map((movie) => {
-          return <Movie {...movie} />;
+          return <Movie key={movie.id} {...movie} />;
         })}
+        <button onClick={this.clearPage}>Clear</button>
       </div>
     );
   }

@@ -1,5 +1,4 @@
 import * as React from "react";
-
 interface props {
   id: number;
   movie: string;
@@ -8,7 +7,9 @@ interface props {
   imdb_url: string;
 }
 
-class Movie extends React.Component<props, {}> {
+interface state {}
+
+class Movie extends React.Component<props, state> {
   render() {
     return (
       <div>

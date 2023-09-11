@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from "react";
 import "./App.css";
-import Movie from "./Movie-Component";
+import Movie from "../movie/Movie-Component";
+import Button from "../button/button";
 
 interface props {}
 
@@ -94,12 +95,12 @@ class App extends React.Component<props, state> {
     return (
       <div className="App">
         <input value={this.state.search} onChange={this.updateSearch} />
-        <button onClick={this.getMoviesFromApi}>Search</button>
+        <Button color="primary" text="Search"  onclick={this.getMoviesFromApi}/> 
 
         {this.state.movies.map((movie) => {
           return <Movie key={movie.id} {...movie} />;
         })}
-        <button onClick={this.clearPage}>Clear</button>
+        <Button color="secondary" text="clear" onclick={this.clearPage}/>
       </div>
     );
   }

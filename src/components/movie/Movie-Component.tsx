@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./movie.css" ;
 interface props {
   id: number;
   movie: string;
